@@ -4,12 +4,12 @@ import twilio from 'twilio';
 import { format } from 'date-fns';
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 const TWILIO_ACCOUNT_SID = 'AC5f87de08726346312fb6a242fb0e5b38';
 const TWILIO_AUTH_TOKEN = '4e074ff87bbeeaf4332fd0c571edbf09';
-const TWILIO_WHATSAPP_NUMBER = 'whatsapp:+15156746683';
+const TWILIO_WHATSAPP_NUMBER = 'whatsapp:+14155238886';
 const USER_PHONE_NUMBER = 'whatsapp:+919321694382';
 
 const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
