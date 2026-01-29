@@ -52,15 +52,19 @@ Before you begin, ensure you have the following installed:
 
 3. **Configure Twilio credentials**
    
-   Update the following values in `server/index.js`:
+   ⚠️ **Important**: Never commit sensitive credentials to version control!
+   
+   **Quick Start (Development Only)**:
+   For quick testing, you can temporarily update values in `server/index.js`:
    ```javascript
    const TWILIO_ACCOUNT_SID = 'your_account_sid';
    const TWILIO_AUTH_TOKEN = 'your_auth_token';
    const TWILIO_WHATSAPP_NUMBER = 'whatsapp:+14155238886'; // Twilio sandbox number
    const USER_PHONE_NUMBER = 'whatsapp:+your_phone_number'; // Your WhatsApp number
    ```
-
-   **Note**: For production use, consider moving these to environment variables using a `.env` file.
+   
+   **Recommended Approach (Use Environment Variables)**:
+   See the [Configuration](#-configuration) section below for secure setup with environment variables.
 
 ## 🎯 Usage
 
@@ -145,9 +149,14 @@ calendar-bot/
 
 ### Environment Variables (Recommended)
 
-For better security, use environment variables:
+For better security, use environment variables to store sensitive credentials:
 
-1. Create a `.env` file in the `server` directory:
+1. **Install dotenv package** (if not already installed):
+   ```bash
+   npm install dotenv
+   ```
+
+2. **Create a `.env` file** in the `server` directory:
    ```env
    TWILIO_ACCOUNT_SID=your_account_sid
    TWILIO_AUTH_TOKEN=your_auth_token
@@ -156,15 +165,24 @@ For better security, use environment variables:
    PORT=3000
    ```
 
-2. Update `server/index.js` to use environment variables:
+3. **Add `.env` to `.gitignore`** to prevent committing secrets:
+   ```bash
+   echo "server/.env" >> .gitignore
+   ```
+
+4. **Update `server/index.js`** to use environment variables:
    ```javascript
    import dotenv from 'dotenv';
-   dotenv.config();
+   dotenv.config({ path: './server/.env' });
    
    const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
    const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
-   // ... etc
+   const TWILIO_WHATSAPP_NUMBER = process.env.TWILIO_WHATSAPP_NUMBER;
+   const USER_PHONE_NUMBER = process.env.USER_PHONE_NUMBER;
+   const PORT = process.env.PORT || 3000;
    ```
+   
+   **Note**: The server currently uses ES6 module syntax. If you get import errors, ensure your `package.json` includes `"type": "module"`.
 
 ## 🤝 Contributing
 
